@@ -83,6 +83,15 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=8 )
     image = models.ImageField(upload_to='images/', default="https://pngimage.net/wp-content/uploads/2018/06/profile-avatar-png-6.png", null=True, blank= True)
     location = models.TextField(max_length=250, null=True, blank=True)
+    def __str__(self):
+        return self.user.username
+    
+#create class for charity to sign in
+class CharityProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    phone = models.CharField(max_length=8 )
+    image = models.ImageField(upload_to='images/', default="https://pngimage.net/wp-content/uploads/2018/06/profile-avatar-png-6.png", null=True, blank= True)
+    location = models.TextField(max_length=250, null=True, blank=True)
     points = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.user.username
