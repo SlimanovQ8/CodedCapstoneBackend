@@ -26,7 +26,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-path("users-list/", views.UsersListAPIView.as_view(), ),
+    path("users-list/", views.UsersListAPIView.as_view(), ),
     path("users-profile/", views.UsersProfileListAPIView.as_view(), ),
     path("users-profile/<int:object_id>/", views.UserProfileAPIView.as_view(), ),
     path("users/<int:object_id>/update/", views.ProfileUpdateView.as_view(), name="update-profile"),
@@ -34,4 +34,24 @@ path("users-list/", views.UsersListAPIView.as_view(), ),
     path("register/", views.UserCreateAPIView.as_view()),
     path("login/", views.MyTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+
+
+
+
+
+
+
+    # web paths
+    path("home/",views.home_Page,name="home"),
+    path("register-user/",views.register_user,name="register-user"),
+    path("login-user/",views.login_user,name="login-user"),
+    path("logout-user/",views.logout_user,name="logout-user"),
+    path("create/category/", views.create_category, name="create-category"),
+    path("create/item/", views.create_item, name="create-item"),
+    path("category/<int:CategoryID>/", views.category_detail, name="category-detail"),
+    path("recipe/<int:ItemID>/", views.item_detail, name="item-detail"),
+
+
+
+
 ]
