@@ -1,0 +1,35 @@
+{%extends "base.html"%}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{%load static%}
+{%block title%} Register {%endblock title%}
+
+{%block content%}
+
+
+<br/><br/>
+
+
+<br/><br/>
+
+<div class="container col-4">
+
+    <main class="form-signin w-100 m-auto">
+        <form action="{% url 'register-user' %}" method ="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+      
+    
+            <input class="w-100 btn btn-lg btn-primary mt-2" type="Submit" value="Sign up">
+
+      
+    
+          <!-- <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Sign up</button>
+           -->
+        </form>
+      </main>
+    
+  </div>
+
+{%endblock content%}
+

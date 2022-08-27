@@ -57,3 +57,5 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
     def check_user(self, obj):
         if obj.owner != self.context["request"].user:
             raise serializers.ValidationError("You are not the owner of this profile")
+        
+

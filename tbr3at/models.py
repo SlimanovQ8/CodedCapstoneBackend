@@ -35,7 +35,6 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 class Charity(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=40)
     description = models.TextField()
     image = models.ImageField(upload_to='images/')
@@ -86,4 +85,3 @@ class UserProfile(models.Model):
     location = models.TextField(max_length=250, null=True, blank=True)
     def __str__(self):
         return self.user.username
-    

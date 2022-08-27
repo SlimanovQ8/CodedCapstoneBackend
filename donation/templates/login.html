@@ -1,0 +1,36 @@
+{%extends "base.html"%}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% load static %}
+{%block title%} login {%endblock title%}
+
+{%block content%}
+
+
+<link rel="stylesheet" href="style.css">
+<br/><br/>
+
+
+<br/><br/>
+
+<div class="container col-4">
+    <div class="container">
+        <img src="{% static 'images/' %}" width="300" height="300"/>
+
+    </div>
+
+    <main class="form-signin w-100 m-auto">
+        <form action="{% url 'login-user'%}" method ="POST">
+            {% csrf_token %}
+          {{ form|crispy }}
+      
+    
+          <input class="w-100 btn btn-lg btn-primary mt-2" type="Submit" value="Sign in"/>
+          
+        </form>
+      </main>
+    
+  </div>
+
+
+{%endblock content%}
