@@ -132,22 +132,22 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
 # we might use this
 
-# class UserCreateSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = User
-#         fields = ["first_name", "email", "username", "password"]
-#
-#     def create(self, validated_data):
-#         firstname = validated_data["first_name"]
-#         email = validated_data["email"]
-#         username = validated_data["username"]
-#         password = validated_data["password"]
-#
-#         new_user = User(first_name=firstname, email= email, username= username,)
-#         new_user.set_password(password)
-#         new_user.save()
-#         newProfile = UserProfile(user=new_user, id= new_user.id)
-#         newProfile.save()
-#
-#         return validated_data
+class UserCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["first_name", "email", "username", "password"]
+
+    def create(self, validated_data):
+        firstname = validated_data["first_name"]
+        email = validated_data["email"]
+        username = validated_data["username"]
+        password = validated_data["password"]
+
+        new_user = User(first_name=firstname, email= email, username= username,)
+        new_user.set_password(password)
+        new_user.save()
+        newProfile = UserProfile(user=new_user, id= new_user.id)
+        newProfile.save()
+
+        return validated_data
