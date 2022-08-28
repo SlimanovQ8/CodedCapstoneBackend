@@ -1,10 +1,15 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import timedelta
 
 # Create your models here.
+class User(AbstractUser):
+  #Boolean fields to select the type of account.
+  isUser = models.BooleanField(default=False)
+  isCharity = models.BooleanField(default=False)
+
 class Category(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField()
@@ -35,6 +40,8 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 class Charity(models.Model):
+    charity = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=40)
     description = models.TextField()
     image = models.ImageField(upload_to='images/')
