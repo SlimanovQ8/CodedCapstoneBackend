@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework import generics
 from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView, RetrieveAPIView
 from django.contrib.auth.models import User
