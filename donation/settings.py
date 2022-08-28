@@ -57,6 +57,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'donation.urls'
+AUTH_USER_MODEL = 'tbr3at.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

@@ -12,15 +12,9 @@ from .forms import RegisterForm,LoginForm,CategoryForm,itemForm
 from django.contrib.auth import login,authenticate,logout
 from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
-from rest_auth.registration.views import RegisterView
-from django.utils.translation import gettext_lazy as _
 
 # Create your views here.
-class UserRegistrationView(RegisterView):
-    serializer_class = serializers.UserCustomRegistrationSerializer
 
-class CharityRegistrationView(RegisterView):
-    serializer_class = serializers.CharityCustomRegistrationSerializer
 
 
 class MyTokenObtainPairView(TokenObtainPairView):

@@ -33,9 +33,6 @@ urlpatterns = [
     path("users-profile/<int:object_id>/", views.UserProfileAPIView.as_view(), ),
     path("users-charity/<int:object_id>/", views.UserProfileAPIView.as_view(), ),
     path("users/<int:object_id>/update/", views.ProfileUpdateView.as_view(), name="update-profile"),
-    #
-    path("register/user", views.UserRegistrationView.as_view()),
-    path("register/charity", views.CharityRegistrationView.as_view()),
     path("login/", views.MyTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
     #
