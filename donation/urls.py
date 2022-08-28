@@ -35,23 +35,23 @@ urlpatterns = [
     path("users/<int:object_id>/update/", views.ProfileUpdateView.as_view(), name="update-profile"),
     path("login/", views.MyTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
-    #
-    #
-    #
-    #
-    #
-    #
-    #
-    # # web paths
-    # path("home/",views.home_Page,name="home"),
-    # path("register-user/",views.register_user,name="register-user"),
-    # path("login-user/",views.login_user,name="login-user"),
-    # path("logout-user/",views.logout_user,name="logout-user"),
-    # path("create/category/", views.create_category, name="create-category"),
-    # path("create/item/", views.create_item, name="create-item"),
-    # path("category/<int:CategoryID>/", views.category_detail, name="category-detail"),
-    # path("recipe/<int:ItemID>/", views.item_detail, name="item-detail"),
-    #
+    
+    
+    
+    
+    
+    
+    
+    # web paths
+    path("home/",views.home_Page,name="home"),
+    path("register-user/",views.register_user,name="register-user"),
+    path("login-user/",views.login_user,name="login-user"),
+    path("logout-user/",views.logout_user,name="logout-user"),
+    path("create/category/", views.create_category, name="create-category"),
+    path("create/item/", views.create_item, name="create-item"),
+    path("category/<int:CategoryID>/", views.category_detail, name="category-detail"),
+    path("recipe/<int:ItemID>/", views.item_detail, name="item-detail"),
+    
 
 
 
