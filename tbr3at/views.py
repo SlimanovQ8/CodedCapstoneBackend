@@ -1,51 +1,64 @@
 
 from rest_framework import generics
 from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView, RetrieveAPIView
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
-from .models import Charity, Category, Annoucement, UserProfile, Item
-from .serializers import UsersListSerializer, UsersProfileListSerializer, UpdateProfileSerializer, UserCreateSerializer, CustomTokenObtainPairSerializer, GetUserProfile
+from .models import Charity, Category, Annoucement, UserProfile, Item, User
+from tbr3at import  serializers
 from .permissions import IsOwner
 from tbr3at import models
 from .forms import RegisterForm,LoginForm,CategoryForm,itemForm
 from django.contrib.auth import login,authenticate,logout
 from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
-
-
+from rest_auth.registration.views import RegisterView
+from django.utils.translation import gettext_lazy as _
 
 # Create your views here.
+class UserRegistrationView(RegisterView):
+    serializer_class = serializers.UserCustomRegistrationSerializer
+
+class CharityRegistrationView(RegisterView):
+    serializer_class = serializers.CharityCustomRegistrationSerializer
+
 
 class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer
+    serializer_class = serializers.CustomTokenObtainPairSerializer
 
-class UserCreateAPIView(generics.CreateAPIView):
-    serializer_class = UserCreateSerializer
+
 
 class UsersListAPIView(ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UsersListSerializer
+    serializer_class = serializers.GetAllUsersSerializers
 
-class UsersProfileListAPIView(ListAPIView):
+class NormalUsersProfileListAPIView(ListAPIView):
     queryset = UserProfile.objects.all()
-    serializer_class = UsersProfileListSerializer
+    serializer_class = serializers.GetAllNormalUsersSerializers
 
 class UserProfileAPIView(RetrieveAPIView):
     queryset = UserProfile.objects.all()
-    serializer_class =  GetUserProfile
+    serializer_class = serializers.GetAllNormalUsersSerializers
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+
+class CharityProfileAPIView(RetrieveAPIView):
+    queryset = Charity.objects.all()
+    serializer_class = serializers.GetAllCharitySerialzers
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
 
 class ProfileUpdateView(UpdateAPIView):
     queryset = UserProfile.objects.all()
-    serializer_class = UpdateProfileSerializer
+    serializer_class = serializers.UpdateProfileSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
     permission_classes = [IsOwner]
 
 
-
+class CharitiesProfileListAPIView(ListAPIView):
+    queryset = Charity.objects.all()
+    serializer_class = serializers.GetAllCharitySerialzers
 
 
 
