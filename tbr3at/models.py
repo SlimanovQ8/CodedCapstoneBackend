@@ -39,6 +39,8 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+
 class Charity(models.Model):
     charity = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
