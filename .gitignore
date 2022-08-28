@@ -36,6 +36,7 @@ __pycache__/
 .Python
 env/
 venv/
+bin/
 build/
 develop-eggs/
 dist/
