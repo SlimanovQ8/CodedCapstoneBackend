@@ -3,78 +3,12 @@ from rest_framework_simplejwt.serializers import TokenObtainSerializer, TokenObt
 
 from .models import UserProfile, Charity, Category, Annoucement, Item, User
 
-from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 
 from django.utils.translation import gettext_lazy as _
 """
     Register Normal User
 """
-class UserCustomRegistrationSerializer(RegisterSerializer):
-    user = serializers.PrimaryKeyRelatedField(read_only=True, )  # by default allow_null = False
-    phone = serializers.CharField(required=True)
-    image = serializers.ImageField(required=True)
-    location = serializers.CharField(required=True)
-
-    def get_cleaned_data(self):
-        data = super(UserCustomRegistrationSerializer, self).get_cleaned_data()
-        extra_data = {
-            'phone': self.validated_data.get('phone', ''),
-            'image': self.validated_data.get('image', ''),
-            'location': self.validated_data.get('location', ''),
-        }
-        data.update(extra_data)
-        return data
-
-    def save(self, request):
-        user = super(UserCustomRegistrationSerializer, self).save(request)
-        user.isUser = True
-        user.save()
-        normalUser = UserProfile(user=user, phone=self.cleaned_data.get('phone'),
-                        image=self.cleaned_data.get('image'),
-                        location=self.cleaned_data.get('location'))
-        normalUser.save()
-        return user
-
-
-
-"""
-    Charity Register
-"""
-class CharityCustomRegistrationSerializer(RegisterSerializer):
-    charity = serializers.PrimaryKeyRelatedField(read_only=True, )  # by default allow_null = False
-    name = serializers.CharField(required=True)
-    description = serializers.CharField(required=True)
-    image = serializers.ImageField(required=True)
-    phone = serializers.CharField(required=True)
-    location = serializers.CharField(required=True)
-
-    def get_cleaned_data(self):
-        data = super(CharityCustomRegistrationSerializer, self).get_cleaned_data()
-        extra_data = {
-            'name': self.validated_data.get('name', ''),
-            'description': self.validated_data.get('description', ''),
-            'phone': self.validated_data.get('phone', ''),
-            'image': self.validated_data.get('image', ''),
-            'location': self.validated_data.get('location', ''),
-        }
-        data.update(extra_data)
-        return data
-
-    def save(self, request):
-        user = super(CharityCustomRegistrationSerializer, self).save(request)
-        user.isCharity = True
-        user.save()
-        charity = Charity(charity=user, name=self.cleaned_data.get('name'),
-                          description=self.cleaned_data.get('description'),
-                          phone=self.cleaned_data.get('phone'),
-                          image=self.cleaned_data.get('image'),
-                          location=self.cleaned_data.get('location'),
-                          rating=0.0
-                          )
-        charity.save()
-        return user
-
 
 """
     Sign in for both charity & custom user
@@ -88,6 +22,12 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['user_id'] = user.id
         token["isCharity"] = user.isCharity
         token["name"] = user.name
+        token["chatrityName"] = user.charityname
+        token["location"] = user.location
+        token["phone"] = user.phone
+        token["rating"] = user.rating
+        token["description"] = user.description
+
         return token
 
 """
@@ -136,18 +76,48 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["first_name", "email", "username", "password"]
+        fields = ["name", "email", "username", "password", "phone", "image", "location"]
 
     def create(self, validated_data):
-        firstname = validated_data["first_name"]
+        name = validated_data["name"]
         email = validated_data["email"]
         username = validated_data["username"]
         password = validated_data["password"]
+        phone = validated_data["phone"]
+        image = validated_data["image"]
+        location = validated_data["location"]
 
-        new_user = User(first_name=firstname, email= email, username= username,)
+
+        new_user = User(name=name, email= email, username= username, phone=phone, image=image, isUser=True, location=location)
         new_user.set_password(password)
         new_user.save()
-        newProfile = UserProfile(user=new_user, id= new_user.id)
+        newProfile = UserProfile(user=new_user, id= new_user.id, phone=phone, image=image, location=location)
         newProfile.save()
+
+        return validated_data
+
+
+class CharityCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["charityname", "email", "username", "password", "phone", "image", "location", "description"]
+
+    def create(self, validated_data):
+        name = validated_data["charityname"]
+        email = validated_data["email"]
+        username = validated_data["username"]
+        password = validated_data["password"]
+        phone = validated_data["phone"]
+        image = validated_data["image"]
+        location = validated_data["location"]
+        description = validated_data["description"]
+
+
+        new_user = User(name=name, charityname= username,  email= email, username= username, phone=phone, image=image, isCharity=True, location=location, description=description)
+        new_user.set_password(password)
+        new_user.save()
+        newCharity = Charity(charity=new_user, id= new_user.id, name=name, description=description, phone=phone, image=image, location=location)
+        newCharity.save()
 
         return validated_data

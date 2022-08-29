@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6t3p0qz49enyt27+!(vu_@xhsfu1yu1ojxiozw+%9w)brp3w^-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -38,19 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tbr3at',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_auth',
-    'rest_auth.registration',
     'rest_framework',
     'rest_framework_simplejwt',
-    'rest_framework.authtoken',
-    'crispy_forms'
+    'crispy_forms',
+
+
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -62,33 +57,21 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'donation.urls'
+AUTH_USER_MODEL = 'tbr3at.User'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+
+    ],
 }
-
-SITE_ID = 1
-
-AUTH_USER_MODEL = 'tbr3at.USER'
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         "rest_framework_simplejwt.authentication.JWTAuthentication",
-#
-#     ),
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.AllowAny',
-#
-#     ],
-# }
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
-# }
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
+}
 
 
 TEMPLATES = [

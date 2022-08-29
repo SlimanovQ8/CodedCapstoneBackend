@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework import generics
 from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView, RetrieveAPIView
 from django.contrib.auth.models import AbstractUser
@@ -12,21 +12,18 @@ from .forms import RegisterForm,LoginForm,CategoryForm,itemForm
 from django.contrib.auth import login,authenticate,logout
 from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
-from rest_auth.registration.views import RegisterView
-from django.utils.translation import gettext_lazy as _
 
 # Create your views here.
-class UserRegistrationView(RegisterView):
-    serializer_class = serializers.UserCustomRegistrationSerializer
 
-class CharityRegistrationView(RegisterView):
-    serializer_class = serializers.CharityCustomRegistrationSerializer
 
+class UserRegistrationView(CreateAPIView):
+    serializer_class = serializers.UserCreateSerializer
+
+class CharityRegistrationView(CreateAPIView):
+    serializer_class = serializers.CharityCreateSerializer
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = serializers.CustomTokenObtainPairSerializer
-
-
 
 class UsersListAPIView(ListAPIView):
     queryset = User.objects.all()
