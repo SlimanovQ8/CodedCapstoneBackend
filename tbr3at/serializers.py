@@ -22,6 +22,12 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['user_id'] = user.id
         token["isCharity"] = user.isCharity
         token["name"] = user.name
+        token["chatrityName"] = user.charityname
+        token["location"] = user.location
+        token["phone"] = user.phone
+        token["rating"] = user.rating
+        token["description"] = user.description
+
         return token
 
 """
@@ -70,18 +76,48 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["first_name", "email", "username", "password"]
+        fields = ["name", "email", "username", "password", "phone", "image", "location"]
 
     def create(self, validated_data):
-        firstname = validated_data["first_name"]
+        name = validated_data["name"]
         email = validated_data["email"]
         username = validated_data["username"]
         password = validated_data["password"]
+        phone = validated_data["phone"]
+        image = validated_data["image"]
+        location = validated_data["location"]
 
-        new_user = User(first_name=firstname, email= email, username= username,)
+
+        new_user = User(name=name, email= email, username= username, phone=phone, image=image, isUser=True, location=location)
         new_user.set_password(password)
         new_user.save()
-        newProfile = UserProfile(user=new_user, id= new_user.id)
+        newProfile = UserProfile(user=new_user, id= new_user.id, phone=phone, image=image, location=location)
         newProfile.save()
+
+        return validated_data
+
+
+class CharityCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["charityname", "email", "username", "password", "phone", "image", "location", "description"]
+
+    def create(self, validated_data):
+        name = validated_data["charityname"]
+        email = validated_data["email"]
+        username = validated_data["username"]
+        password = validated_data["password"]
+        phone = validated_data["phone"]
+        image = validated_data["image"]
+        location = validated_data["location"]
+        description = validated_data["description"]
+
+
+        new_user = User(name=name, charityname= username,  email= email, username= username, phone=phone, image=image, isCharity=True, location=location, description=description)
+        new_user.set_password(password)
+        new_user.save()
+        newCharity = Charity(charity=new_user, id= new_user.id, name=name, description=description, phone=phone, image=image, location=location)
+        newCharity.save()
 
         return validated_data

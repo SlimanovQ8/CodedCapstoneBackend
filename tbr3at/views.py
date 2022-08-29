@@ -16,11 +16,14 @@ from django.http import HttpRequest, HttpResponse
 # Create your views here.
 
 
+class UserRegistrationView(CreateAPIView):
+    serializer_class = serializers.UserCreateSerializer
+
+class CharityRegistrationView(CreateAPIView):
+    serializer_class = serializers.CharityCreateSerializer
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = serializers.CustomTokenObtainPairSerializer
-
-
 
 class UsersListAPIView(ListAPIView):
     queryset = User.objects.all()

@@ -7,6 +7,14 @@ from datetime import timedelta
 # Create your models here.
 class User(AbstractUser):
   #Boolean fields to select the type of account.
+  username = models.CharField(max_length=40, blank=True, null=True, unique=True)
+  charityname = models.CharField(max_length=40, blank=True, null=True)
+  name = models.CharField(max_length=40, blank=True, null=True)
+  description = models.TextField(blank=True, null=True)
+  image = models.ImageField(upload_to='images/', blank=True, null=True)
+  rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], blank=True, null=True, default=0.0)
+  phone = models.CharField(max_length=8, blank=True, null=True)
+  location = models.CharField(max_length=250, blank=True, null=True)
   isUser = models.BooleanField(default=False)
   isCharity = models.BooleanField(default=False)
 
@@ -45,11 +53,11 @@ class Charity(models.Model):
     charity = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=40)
-    description = models.TextField()
-    image = models.ImageField(upload_to='images/')
-    rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    phone = models.CharField(max_length=8)
-    location = models.CharField(max_length=250)
+    description = models.TextField(null= True, blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], default=0.0)
+    phone = models.CharField(max_length=8, null=True, blank=True)
+    location = models.CharField(max_length=250, null=True, blank=True)
     def __str__(self):
         return self.name
 
@@ -92,15 +100,5 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=8 )
     image = models.ImageField(upload_to='images/', default="https://pngimage.net/wp-content/uploads/2018/06/profile-avatar-png-6.png", null=True, blank= True)
     location = models.TextField(max_length=250, null=True, blank=True)
-    def __str__(self):
-        return self.user.username
-    
-#create class for charity to sign in
-class CharityProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    phone = models.CharField(max_length=8 )
-    image = models.ImageField(upload_to='images/', default="https://pngimage.net/wp-content/uploads/2018/06/profile-avatar-png-6.png", null=True, blank= True)
-    location = models.TextField(max_length=250, null=True, blank=True)
-    points = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.user.username
