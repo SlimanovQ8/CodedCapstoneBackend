@@ -214,3 +214,31 @@ def item_detail(request, ItemID):
     }
 
     return render(request, "item_detail.html", context)
+
+
+
+
+# User Lists 
+def get_User(request):
+    users = User.objects.all()
+    context = {"users":users}
+    return render(request,"users-list.html",context)
+
+
+#User details
+def get_user_details(request,user_id):
+    user=User.objects.get(id=user_id)
+
+    context= {
+        "user": {
+            "name": user.name,
+            "username": user.username,
+            "rating": user.rating,
+            "phone": user.phone,
+            "locatiojn": user.location,
+            "image": user.image,
+    
+        }
+       
+    }
+    return render (request,"user-details.html",context)
