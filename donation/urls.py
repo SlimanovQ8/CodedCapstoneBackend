@@ -37,15 +37,13 @@ urlpatterns = [
     path("register-charity/", views.CharityRegistrationView.as_view(), name="register-charity"),
     path("login/", views.MyTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
-    path("annoucements/", views.AnnoucementsListAPIView.as_view(), name="annoucements"),
+    path("announcement/", views.AnnoucementsListAPIView.as_view(), name="annoucements"),
+    path("category/", views.CategoriesListAPIView.as_view(), name="categories"),
+    path("item/", views.ItemsListAPIView.as_view(), name="items"),
+    path("announcement/<int:object_id>/", views.OneAnnoucementAPIView.as_view(), name="annoucement"),
+    path("item/<int:object_id>/", views.OneItemAPIView.as_view(), name="item"),
+    path("category/<int:object_id>/", views.OneCategoryAPIView.as_view(), name="categor=y"),
 
-    
-    
-    
-    
-    
-    
-    
     # web paths
     path("home/",views.home_Page,name="home"),
     path("register-user/",views.register_user,name="register-user"),

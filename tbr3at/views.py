@@ -64,6 +64,32 @@ class AnnoucementsListAPIView(ListAPIView):
 
 
 
+class CategoriesListAPIView(ListAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.GetAllCategoriesSerializers
+
+class ItemsListAPIView(ListAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.GetAllItemsSerializers
+
+class OneAnnoucementAPIView(RetrieveAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.GetAllAnnoucementSerializers
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+
+
+class OneCategoryAPIView(RetrieveAPIView):
+    queryset = Category.objects.all()
+    serializer_class = serializers.GetAllCategoriesSerializers
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+
+class OneItemAPIView(RetrieveAPIView):
+    queryset = Item.objects.all()
+    serializer_class = serializers.GetAllItemsSerializers
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
 
 ##############################################################################################
 #  WEB VIWES 
