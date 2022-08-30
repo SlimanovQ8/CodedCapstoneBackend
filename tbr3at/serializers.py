@@ -61,6 +61,15 @@ class GetAllAnnoucementSerializers(serializers.ModelSerializer):
         model = Annoucement
         fields = "__all__"
 
+class GetAllCategoriesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
+
+class GetAllItemsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = "__all__"
 
 class UsersProfileListSerializer(serializers.ModelSerializer):
     class Meta:
