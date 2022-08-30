@@ -37,6 +37,8 @@ urlpatterns = [
     path("register-charity/", views.CharityRegistrationView.as_view(), name="register-charity"),
     path("login/", views.MyTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+    path("annoucements/", views.AnnoucementsListAPIView.as_view(), name="annoucements"),
+
     
     
     
