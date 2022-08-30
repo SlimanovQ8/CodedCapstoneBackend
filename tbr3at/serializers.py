@@ -27,6 +27,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["phone"] = user.phone
         token["rating"] = user.rating
         token["description"] = user.description
+        token["points"] = user.points
+        token["numOfDonation"] = user.numOfDonation
 
         return token
 
@@ -54,6 +56,11 @@ class GetAllCharitySerialzers(serializers.ModelSerializer):
         model = Charity
         fields = "__all__"
 
+class GetAllAnnoucementSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Annoucement
+        fields = "__all__"
+
 
 class UsersProfileListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -76,7 +83,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["name", "email", "username", "password", "phone", "image", "location"]
+        fields = ["name", "email", "username", "password", "phone", "location"]
 
     def create(self, validated_data):
         name = validated_data["name"]
@@ -84,14 +91,14 @@ class UserCreateSerializer(serializers.ModelSerializer):
         username = validated_data["username"]
         password = validated_data["password"]
         phone = validated_data["phone"]
-        image = validated_data["image"]
+        # image = validated_data["image"]
         location = validated_data["location"]
 
 
-        new_user = User(name=name, email= email, username= username, phone=phone, image=image, isUser=True, location=location)
+        new_user = User(name=name, email= email, username= username, phone=phone, isUser=True, location=location)
         new_user.set_password(password)
         new_user.save()
-        newProfile = UserProfile(user=new_user, id= new_user.id, phone=phone, image=image, location=location)
+        newProfile = UserProfile(user=new_user, id= new_user.id, phone=phone, location=location)
         newProfile.save()
 
         return validated_data
@@ -101,23 +108,23 @@ class CharityCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["charityname", "email", "username", "password", "phone", "image", "location", "description"]
+        fields = ["charityname", "email" , "password", "phone", "location",]
 
     def create(self, validated_data):
         name = validated_data["charityname"]
         email = validated_data["email"]
-        username = validated_data["username"]
+        username = validated_data["charityname"]
         password = validated_data["password"]
         phone = validated_data["phone"]
-        image = validated_data["image"]
+        # image = validated_data["image"]
         location = validated_data["location"]
-        description = validated_data["description"]
+        # description = validated_data["description"]
 
 
-        new_user = User(name=name, charityname= username,  email= email, username= username, phone=phone, image=image, isCharity=True, location=location, description=description)
+        new_user = User(name=name, charityname= username,  email= email, username= name, phone=phone, isCharity=True, location=location,)
         new_user.set_password(password)
         new_user.save()
-        newCharity = Charity(charity=new_user, id= new_user.id, name=name, description=description, phone=phone, image=image, location=location)
+        newCharity = Charity(charity=new_user, id= new_user.id, name=name, phone=phone, location=location)
         newCharity.save()
 
         return validated_data

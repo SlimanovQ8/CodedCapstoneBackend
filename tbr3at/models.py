@@ -17,6 +17,8 @@ class User(AbstractUser):
   location = models.CharField(max_length=250, blank=True, null=True)
   isUser = models.BooleanField(default=False)
   isCharity = models.BooleanField(default=False)
+  numOfDonation = models.PositiveIntegerField(default=0)
+  points = models.PositiveIntegerField(default=0)
 
 class Category(models.Model):
     name = models.CharField(max_length=40)
@@ -97,8 +99,11 @@ class Annoucement(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    phone = models.CharField(max_length=8 )
+    phone = models.CharField(max_length=8, null=True, blank=True)
     image = models.ImageField(upload_to='images/', default="https://pngimage.net/wp-content/uploads/2018/06/profile-avatar-png-6.png", null=True, blank= True)
     location = models.TextField(max_length=250, null=True, blank=True)
+    numOfDonation = models.PositiveIntegerField(default=0)
+    points = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.user.username
+

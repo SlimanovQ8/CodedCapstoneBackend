@@ -58,7 +58,9 @@ class CharitiesProfileListAPIView(ListAPIView):
     serializer_class = serializers.GetAllCharitySerialzers
 
 
-
+class AnnoucementsListAPIView(ListAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.GetAllAnnoucementSerializers
 
 
 
