@@ -242,3 +242,10 @@ def get_user_details(request,user_id):
        
     }
     return render (request,"user-details.html",context)
+
+
+# Charity Lists 
+def get_charity(request):
+    charity = Charity.objects.all()
+    context = {"charity":charity}
+    return render(request,"base.html",context)
