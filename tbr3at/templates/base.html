@@ -21,24 +21,27 @@
     
         <div class="wrapper">
             <div class="sidebar">
-                <h2>Sidebar</h2>
-                <div class="navb-logo">
+                    <div class = container d-flex> 
+                        <img class="circle" src="" alt="" >
+                        <div class="user flex flex-column">
+                            <p class ="name-font">{{charity.name}}</p>
+                            <p class ="name-font">Adminstartor</p>
+
+                        </div>
+                    </div>
+
+                <!-- <div class="navb-logo">
                     <img src="/img/logo.png" alt="Logo">
-                </div>
+                </div> -->
+
                 <ul>
                     <li><a href="#"><i class="fas fa-user"></i>Dashboard</a></li>
                     <li><a href=" {%url 'users_list'%}"><i class="fas fa-home"></i>Users List</a></li>
-                    <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
-                    <li><a href="#"><i class="fas fa-project-diagram"></i>portfolio</a></li>
-                    <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-                    <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
-                    <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
+                    <li><a href="#"><i class="fas fa-address-card"></i>setting</a></li>
+                    <li><a href="#"><i class="fas fa-project-diagram"></i>logout</a></li>
+                 
                 </ul> 
-                <div class="social_media">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
+                
             </div>
 
 
