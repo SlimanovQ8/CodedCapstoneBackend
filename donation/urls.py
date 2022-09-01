@@ -26,23 +26,48 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
+    # User CRUD
     path("users-all/", views.UsersListAPIView.as_view(), ),
     path("users-profile/", views.NormalUsersProfileListAPIView.as_view(), ),
     path("users-charity/", views.CharitiesProfileListAPIView.as_view(), ),
     path("users-profile/<int:object_id>/", views.UserProfileAPIView.as_view(), ),
     path("users-charity/<int:object_id>/", views.UserProfileAPIView.as_view(), ),
     path("users/<int:object_id>/update/", views.ProfileUpdateView.as_view(), name="update-profile"),
+
+
+    #Login and Registration path
     path("register-user/", views.UserRegistrationView.as_view(), name="register-user"),
     path("register-charity/", views.CharityRegistrationView.as_view(), name="register-charity"),
     path("login/", views.MyTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
-    path("announcement/", views.AnnoucementsListAPIView.as_view(), name="annoucements"),
+
+    #Category CRUD
     path("category/", views.CategoriesListAPIView.as_view(), name="categories"),
+    path("category/<int:object_id>/", views.OneCategoryAPIView.as_view(), name="category"),
+    path("category/create/", views.CategoryCreateView.as_view(), name="category-create"),
+    path("category/update/<int:object_id>/", views.CategoryUpdateView.as_view(), name="category-update"),
+    path("category/delete/<int:object_id>/", views.CategoryDeleteView.as_view(), name="category-delete"),
+
+
+    #Item CRUD
     path("item/", views.ItemsListAPIView.as_view(), name="items"),
-    path("announcement/<int:object_id>/", views.OneAnnoucementAPIView.as_view(), name="annoucement"),
     path("item/<int:object_id>/", views.OneItemAPIView.as_view(), name="item"),
-    path("category/<int:object_id>/", views.OneCategoryAPIView.as_view(), name="categor=y"),
+    path("item/create/", views.ItemCreateView.as_view(), name="item-create"),
+    path("item/update/<int:object_id>/", views.ItemUpdateView.as_view(), name="item-update"),
+    path("item/delete/<int:object_id>/", views.ItemDeleteView.as_view(), name="item-delete"),
+
+
+
+    #Announcement CRUD
+    path("announcement/", views.AnnoucementsListAPIView.as_view(), name="announcements"),
+    path("announcement/<int:object_id>/", views.OneAnnoucementAPIView.as_view(), name="announcement"),
+    path("announcement/create/", views.AnnouncementCreateView.as_view(), name="announcement-create"),
+    path("announcement/update/<int:object_id>/", views.AnnoucementUpdateView.as_view(), name="announcement-update"),
+    path("announcement/delete/<int:object_id>/", views.AnnoucementDeleteView.as_view(), name="announcement-delete"),
+
+
 
     # web paths
     path("home/",views.home_Page,name="home"),

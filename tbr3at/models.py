@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
@@ -83,12 +85,13 @@ class Annoucement(models.Model):
     image = models.ImageField(upload_to='images/')
     priority = models.CharField(choices=priority_choices, max_length=15)
     charity_name = models.ForeignKey(
-        Charity,
+        User,
         on_delete=models.CASCADE,
         related_name="annoucement",
     )
     quantity = models.PositiveIntegerField(default=0)
-    duration = models.DurationField(default= timedelta(days=1), null=True)
+    remaining = models.PositiveIntegerField(default=0)
+    duration = models.DateField()
     category_name = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
