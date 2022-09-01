@@ -22,10 +22,7 @@
     
         <div class="wrapper">
             <div class="sidebar">
-                    <div class = "container d-flex"> 
-                        {% if request.user.is_authenticated %}
-                        <img class="avatar circle " src="{{request.user.image.url}}"  alt="" >
-                        <div class="user flex flex-column ">
+
                             <p class ="name-font">{{request.user.username}}</p>
                             <p class ="name-font">Adminstartor</p>
                             
