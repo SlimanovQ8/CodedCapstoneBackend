@@ -42,7 +42,11 @@ urlpatterns = [
     path("item/", views.ItemsListAPIView.as_view(), name="items"),
     path("announcement/<int:object_id>/", views.OneAnnoucementAPIView.as_view(), name="annoucement"),
     path("item/<int:object_id>/", views.OneItemAPIView.as_view(), name="item"),
-    path("category/<int:object_id>/", views.OneCategoryAPIView.as_view(), name="categor=y"),
+    path("category/<int:object_id>/", views.OneCategoryAPIView.as_view(), name="category"),
+    path("item/create/", views.ItemCreateView.as_view(), name="item-create"),
+    path("announcement/create/", views.AnnouncementCreateView.as_view(), name="annoucement-create"),
+    path("category/create/", views.CategoryCreateView.as_view(), name="category-create"),
+    
 
     # web paths
     path("home/",views.home_Page,name="home"),
@@ -55,6 +59,7 @@ urlpatterns = [
     path("item/<int:ItemID>/", views.item_detail, name="item-detail"),
     path("users/",views.get_User,name="users_list"),
     path("user-details/<int:user_id>/",views.get_user_details,name="user_details"),
+    
 
     
 

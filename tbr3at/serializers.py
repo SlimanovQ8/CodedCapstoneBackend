@@ -137,3 +137,145 @@ class CharityCreateSerializer(serializers.ModelSerializer):
         newCharity.save()
 
         return validated_data
+    
+"""create item serializer"""
+class ItemCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        fields = ["name", "description", "image", "category"]
+
+    def create(self, validated_data):
+        name = validated_data["name"]
+        description = validated_data["description"]
+        image = validated_data["image"]
+        category = validated_data["category"]
+
+
+        newItem = Item(name=name, description=description, image=image, category=category)
+        newItem.save()
+
+        return validated_data
+
+class CategoryCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ["name", "description", "image"]
+
+    def create(self, validated_data):
+        name = validated_data["name"]
+        description = validated_data["description"]
+        image = validated_data["image"]
+
+        newCategory = Category(name=name, description=description, image=image)
+        newCategory.save()
+
+        return validated_data
+
+class AnnoucementCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Annoucement
+        fields = ["name", "description", "image", "category"]
+
+    def create(self, validated_data):
+        name = validated_data["name"]
+        description = validated_data["description"]
+        image = validated_data["image"]
+        category = validated_data["category"]
+
+        newAnnoucement = Annoucement(name=name, description=description, image=image, category=category)
+        newAnnoucement.save()
+
+        return validated_data
+
+"""item update serializer"""
+class ItemUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        fields = ["name", "description", "image", "category"]
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.category = validated_data.get('category', instance.category)
+        instance.save()
+        return instance
+    
+"""category update serializer"""
+class CategoryUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ["name", "description", "image"]
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.save()
+        return instance
+    
+"""annoucement update serializer"""
+class AnnoucementUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Annoucement
+        fields = ["name", "description", "image", "category"]
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.category = validated_data.get('category', instance.category)
+        instance.save()
+        return instance
+    
+"""item delete serializer"""
+class ItemDeleteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        fields = ["name", "description", "image", "category"]
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.category = validated_data.get('category', instance.category)
+        instance.save()
+        return instance
+    
+"""category delete serializer"""
+class CategoryDeleteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ["name", "description", "image"]
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.save()
+        return instance
+    
+"""annoucement delete serializer"""
+class AnnoucementDeleteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Annoucement
+        fields = ["name", "description", "image", "category"]
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.category = validated_data.get('category', instance.category)
+        instance.save()
+        return instance
+    
+

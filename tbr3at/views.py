@@ -90,6 +90,79 @@ class OneItemAPIView(RetrieveAPIView):
     serializer_class = serializers.GetAllItemsSerializers
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
+    
+class ItemCreateView(CreateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = serializers.ItemCreateSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class CategoryCreateView(CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = serializers.CategoryCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        
+class AnnouncementCreateView(CreateAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.AnnoucementCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class ItemUpdateView(UpdateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = serializers.ItemUpdateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+    permission_classes = [IsAuthenticated,IsOwner]
+    
+class CategoryUpdateView(UpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = serializers.CategoryUpdateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+    permission_classes = [IsAuthenticated,IsOwner]
+    
+class AnnoucementUpdateView(UpdateAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.AnnoucementUpdateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+    permission_classes = [IsAuthenticated,IsOwner]
+    
+    
+"""delete item view"""
+class ItemDeleteView(DestroyAPIView):
+    queryset = Item.objects.all()
+    serializer_class = serializers.ItemDeleteSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+    permission_classes = [IsAuthenticated,IsOwner]
+    
+"""delete category view"""
+class CategoryDeleteView(DestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = serializers.CategoryDeleteSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+    permission_classes = [IsAuthenticated,IsOwner]
+    
+"""delete annoucement view"""
+
+class AnnoucementDeleteView(DestroyAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.AnnoucementDeleteSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+    permission_classes = [IsAuthenticated,IsOwner]
+    
+    
 
 ##############################################################################################
 #  WEB VIWES 
@@ -277,3 +350,4 @@ def get_charity(request):
     charity = Charity.objects.all()
     context = {"charity":charity}
     return render(request,"base.html",context)
+
