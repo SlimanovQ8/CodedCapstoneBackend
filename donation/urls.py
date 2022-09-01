@@ -45,7 +45,7 @@ urlpatterns = [
     path("category/<int:object_id>/", views.OneCategoryAPIView.as_view(), name="categor=y"),
 
     # web paths
-    path("home/",views.home_Page,name="home"),
+    path("home/",views.get_charity,name="home"),
     path("register-user/",views.register_user,name="register-user"),
     path("login-user/",views.login_user,name="login-user"),
     path("logout-user/",views.logout_user,name="logout-user"),

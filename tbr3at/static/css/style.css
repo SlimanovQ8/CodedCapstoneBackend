@@ -1,4 +1,4 @@
-.btn{
+.btn-base{
     background-color: #4CAF50; /* Green */
   border: none;
   color: white;
@@ -119,18 +119,116 @@
     font-size: 11px;
     color: white;
     text-align: center;
+ 
+}
+
+
+.avatar {
+height: 80px;
+}
+
+.circle{
+  border-radius: 50%;
+}
+
+.h6{
+ 
+    font-family: Arial, Helvetica, sans-serif;
+ 
+}
+
+.h3{
+ 
+  font-family: Arial, Helvetica, sans-serif;
 
 }
 
 
 
+/*
+design 
+*/
+
+
+.login-body {
+  background: #599fd9;
+  background-image: linear-gradient( 135.9deg,  	rgb(240,240,240) 16.4%,	rgb(182, 182, 182) 56.1% );
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+ .vertical-nav {
+  min-width: 17rem;
+  width: 17rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s;
+}
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+} 
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+
+.separator {
+  margin: 3rem 0;
+  border-bottom: 1px dashed #fff;
+}
+
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+.text-gray {
+  color: #aaa;
+}
+.nav-link{
+    text-transform: capitalize;
+}
+.nav-link:hover{
+    background:#f3f2f2;
+}
+.text-primary{
+    color:#7579e7 !important;
+}
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -17rem;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #content {
+    width: 100%;
+    margin: 0;
+  }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
 
 
 
+/*
+Sign In Form CSS Style
+*/
+  
 
-
-
-
-
-
+.sign-form{
+  background:  #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px #0d0d0d;
+}
 
