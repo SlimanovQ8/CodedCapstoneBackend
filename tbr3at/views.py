@@ -359,6 +359,6 @@ def get_user_details(request,user_id):
 
 # Charity Lists 
 def get_charity(request):
-    charity = Charity.objects.all()
+    charity = User.objects.all()
     context = {"charity":charity}
     return render(request,"base.html",context)
