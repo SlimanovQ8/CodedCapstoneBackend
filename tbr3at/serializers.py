@@ -20,7 +20,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['first_name'] = user.first_name
         token['email'] = user.email
         token['user_id'] = user.id
+        token['id'] = user.id
         token["isCharity"] = user.isCharity
+        token["isUser"] = user.isUser
         token["name"] = user.name
         token["chatrityName"] = user.charityname
         token["location"] = user.location
@@ -150,16 +152,22 @@ class ItemCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ["name", "description", "image", "category"]
+        fields = ["name", "description", "image", "condition", "category_name"]
+        extra_kwargs = {
+            "owner": {
+                "read_only": True
+            }
+        }
 
     def create(self, validated_data):
         name = validated_data["name"]
         description = validated_data["description"]
         image = validated_data["image"]
-        category = validated_data["category"]
+        condition = validated_data["condition"]
+        category_name = validated_data["category_name"]
+        owner = self.context["request"].user
 
-
-        newItem = Item(name=name, description=description, image=image, category=category)
+        newItem = Item(name=name, description=description, image=image, condition=condition, category_name=category_name, created_by=owner)
         newItem.save()
 
         return validated_data
@@ -240,6 +248,20 @@ class AnnoucementUpdateSerializer(serializers.ModelSerializer):
         instance.category = validated_data.get('category', instance.category)
         instance.save()
         return instance
+
+class DonateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Annoucement
+        fields = ["remaining"]
+
+
+class updateUserPointsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["points", "numOfDonation"]
+
 
 """item delete serializer"""
 class ItemDeleteSerializer(serializers.ModelSerializer):

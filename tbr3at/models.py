@@ -38,12 +38,14 @@ class Item(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField()
     image = models.ImageField(upload_to='images/')
-    condition = models.CharField(choices=condition_choices, max_length=15)
+    condition = models.CharField(choices=condition_choices, max_length=15, null=True, blank=True)
     isReserved = models.BooleanField(default=False)
     category_name = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
         related_name="items",
+        null=True,
+        blank=True,
     )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="items"

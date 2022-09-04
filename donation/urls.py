@@ -35,7 +35,7 @@ urlpatterns = [
     path("users-profile/<int:object_id>/", views.UserProfileAPIView.as_view(), ),
     path("users-charity/<int:object_id>/", views.UserProfileAPIView.as_view(), ),
     path("users/<int:object_id>/update/", views.ProfileUpdateView.as_view(), name="update-profile"),
-
+    path("users/points/<int:object_id>/", views.UpdsteUserPointsView.as_view(), name="update-points"),
 
     #Login and Registration path
     path("register-user/", views.UserRegistrationView.as_view(), name="register-user"),
@@ -55,8 +55,8 @@ urlpatterns = [
     path("item/", views.ItemsListAPIView.as_view(), name="items"),
     path("item/<int:object_id>/", views.OneItemAPIView.as_view(), name="item"),
     path("item/create/", views.ItemCreateView.as_view(), name="item-create"),
-    path("item/update/<int:object_id>/", views.ItemUpdateView.as_view(), name="item-update"),
-    path("item/delete/<int:object_id>/", views.ItemDeleteView.as_view(), name="item-delete"),
+    path("item/<int:object_id>/update/", views.ItemUpdateView.as_view(), name="item-update"),
+    path("item/<int:object_id>/delete/", views.ItemDeleteView.as_view(), name="item-delete"),
 
 
 
@@ -66,8 +66,7 @@ urlpatterns = [
     path("announcement/create/", views.AnnouncementCreateView.as_view(), name="announcement-create"),
     path("announcement/update/<int:object_id>/", views.AnnoucementUpdateView.as_view(), name="announcement-update"),
     path("announcement/delete/<int:object_id>/", views.AnnoucementDeleteView.as_view(), name="announcement-delete"),
-
-
+    path("announcement/donate/<int:object_id>/", views.DonateView.as_view(), name="donate"),
 
     # web paths
     path("home/",views.get_charity,name="home"),

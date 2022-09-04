@@ -71,7 +71,7 @@ class CategoriesListAPIView(ListAPIView):
 class ItemsListAPIView(ListAPIView):
     queryset = Item.objects.all()
     serializer_class = serializers.GetAllItemsSerializers
-
+#
 class OneAnnoucementAPIView(RetrieveAPIView):
     queryset = Annoucement.objects.all()
     serializer_class = serializers.GetAllAnnoucementSerializers
@@ -92,13 +92,10 @@ class OneItemAPIView(RetrieveAPIView):
     lookup_url_kwarg = 'object_id'
 
 
-class ItemCreateView(CreateAPIView):
-    queryset = Item.objects.all()
-    serializer_class = serializers.ItemCreateSerializer
-    permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+class ItemCreateView(CreateAPIView):
+    serializer_class = serializers.ItemCreateSerializer
+
 
 
 class CategoryCreateView(CreateAPIView):
@@ -140,18 +137,28 @@ class AnnoucementUpdateView(UpdateAPIView):
     serializer_class = serializers.AnnoucementUpdateSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
-    permission_classes = [IsAuthenticated, IsOwner]
 
+class DonateView(UpdateAPIView):
+    queryset = Annoucement.objects.all()
+    serializer_class = serializers.DonateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+
+
+class UpdsteUserPointsView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = serializers.updateUserPointsSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
 
 """delete item view"""
 
 
 class ItemDeleteView(DestroyAPIView):
     queryset = Item.objects.all()
-    serializer_class = serializers.ItemDeleteSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsOwner]
 
 
 """delete category view"""
