@@ -1,129 +1,62 @@
 {%load static%}
+
 <!DOCTYPE html>
-<html lang=""en>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
-    
-    <title>
-        {%block title%}{%endblock title%}
-    </title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
+
 <body>
 
+    <section id="menu">
+        <div class="logo">
+            {% if request.user.is_authenticated %}
+            <img src="{{request.user.image.url}}" alt="" class="mr-3  img-thumbnail shadow-sm">
+            <h2>{{request.user.username}}</h2>
+            <p class="font-weight-normal text-muted mb-0">Adminstartor</p>
+        </div>
+        {%endif%}
 
-    <div class="container-fluid" > 
-        
-    
-        <div class="wrapper">
-            <div class="sidebar">
-
-                            <p class ="name-font">{{request.user.username}}</p>
-                            <p class ="name-font">Adminstartor</p>
-                            
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="vertical-nav bg-black" id="sidebar">
-                        <div class="py-4 px-3 mb-4 bg-black">
-                          <div class="media d-flex align-items-center">
-                                {% if request.user.is_authenticated %}
-                                <img loading="lazy" src="{{request.user.image.url}}" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
-                                <div class="media-body">
-                                <h4 class="m-0">{{request.user.username}}</h4>
-                                <p class="font-weight-normal text-muted mb-0">Adminstartor</p>
-                            </div>
-                            {%endif%}
-                        </div>
-                    </div>
-
-              
-                <ul>
-                    <li><a href="#"><i class="fas fa-user"></i>Dashboard</a></li>
-                    <li><a href="{%url 'users_list'%}"><i class="fas fa-home"></i>Users List</a></li>
-                    <li><a href="#"><i class="fas fa-address-card"></i>setting</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'login-user' %}"><i class="fas fa-project-diagram"></i>logout</a></li>
-                    {% endif %}
-                 
-                </ul> 
-                
-            </div>
-
-
-
-
-
-
-
+        <div class="items">
+            <li><i class="fa-solid fa-house px-1"></i><a href="#">Dashboard</a></li>
+            <li><i class="fa-solid fa-list-ul px-1"></i><a href="#">User List</a></li>
+            <li><i class="fa-solid fa-gear px-1"></i><a href="#">Admin setting</a></li>
+            <li><i class="fa-solid fa-bell px-1"></i></i><a href="#">Notification</a></li>
+            {% if user.is_authenticated %}
+            <li><i class="fa-solid fa-arrow-right-from-bracket px-1"></i></i><a href="{% url 'login-user' %}">Logout</a></li>
+            {% endif %}
 
 
         </div>
+    </section>
 
 
-    </div>
+    {%block content%}{%endblock content%}
 
 
-
-    <container class="d-flex p-5">
-
-        <section class="container col-9 ">
-            <div class="row justify-content-md-center ">
-                <div class="col-md-12">
-                    <h2 class="text-dark text-center pb-4 pt-4"> List of users</h2>   
-                </div>
-                {%for user in users %}
-                <div class="col-lg-3 col-md-4 col-sm-3 mb-4">
-                    <div class="shadow d-flex justify-content-center align-items-center p-3 bg-dark rounded-lg flex-column">
-                        <div class="person-img">
-                            <a href="{% url 'user_details' user_id=user.id%}"><img src= "{{user.image.url}}" class="img-fluid rounded-circle avatar"></a>
-                        </div>
-                        <div class="lead">
-                            <h5 class=" h5 text-white"> Name: {{user.name}}</h5>
-                        </div>
-                        <div class="username">
-                            <h6 class=" h6 text-white"> username: {{user.username}} </h6>
-                        </div>
-                        <div>
-                            <a href="{% url 'user_details' user_id=user.id%}" class="btn btn-secondary btn-sm btn-block mt-2">View Profile</a>
-                        </div>
-        
-        
-        
-                    </div>
-        
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-    </container>
-  
-
-  
-
-
-
-
-
-
- 
-      
-
-
-
-
-  
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script>
+        $('#menu-btn').click(function() {
+            $('#menu').toggleClass("active");
+        })
+    </script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
 </body>
+
+
 </html>

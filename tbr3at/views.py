@@ -250,14 +250,14 @@ def logout_user(request):
 def create_category(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect("login")
-   
+
     form = CategoryForm()
     if request.method == "POST":
         form = CategoryForm(request.POST, request.FILES)
 
         if form.is_valid():
-            categor = form.save(commit=False) 
-            categor.created_by = request.user 
+            categor = form.save(commit=False)
+            categor.created_by = request.user
             categor.save()
             return redirect("home")
 
@@ -342,7 +342,7 @@ def item_detail(request, ItemID):
 def get_User(request):
     users = User.objects.all()
     context = {"users":users}
-    return render(request,"users-list.html",context)
+    return render(request,"home_page.html",context)
 
 
 #User details
@@ -366,6 +366,14 @@ def get_user_details(request,user_id):
 
 # Charity Lists 
 def get_charity(request):
-    charity = User.objects.all()
-    context = {"charity":charity}
-    return render(request,"base.html",context)
+    users = User.objects.filter(isUser=True).all()
+    allUsers = User.objects.all()
+    items = Item.objects.all()
+    charites = User.objects.filter(isCharity=True).all()
+    context = {
+        "users":users,
+        "charities": charites,
+        "allUsers": allUsers,
+        "items": items
+               }
+    return render(request,"dashboard.html",context)
