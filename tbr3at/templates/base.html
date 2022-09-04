@@ -12,6 +12,7 @@
         {%block title%}{%endblock title%}
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 
 </head>
 <body>
@@ -44,13 +45,15 @@
                                 <div class="media-body">
                                 <h4 class="m-0">{{request.user.username}}</h4>
                                 <p class="font-weight-normal text-muted mb-0">Adminstartor</p>
-                            </div>
-                            {%endif%}
+                                </div>
+                                 {%endif%}
+                             </div>
                         </div>
-                    </div>
 
               
                 <ul>
+
+
                     <li><a href="#"><i class="fas fa-user"></i>Dashboard</a></li>
                     <li><a href="{%url 'users_list'%}"><i class="fas fa-home"></i>Users List</a></li>
                     <li><a href="#"><i class="fas fa-address-card"></i>setting</a></li>
@@ -82,10 +85,13 @@
         <section class="container col-9 ">
             <div class="row justify-content-md-center ">
                 <div class="col-md-12">
-                    <h2 class="text-dark text-center pb-4 pt-4"> List of users</h2>   
+                     
                 </div>
+                <h2 class="text-dark text-center pb-4 pt-4"> List of users</h2> 
+
                 {%for user in users %}
                 <div class="col-lg-3 col-md-4 col-sm-3 mb-4">
+                     
                     <div class="shadow d-flex justify-content-center align-items-center p-3 bg-dark rounded-lg flex-column">
                         <div class="person-img">
                             <a href="{% url 'user_details' user_id=user.id%}"><img src= "{{user.image.url}}" class="img-fluid rounded-circle avatar"></a>
