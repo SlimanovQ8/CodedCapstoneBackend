@@ -35,3 +35,10 @@ class itemForm(forms.ModelForm):
     class Meta:
         model = models.Item
         exclude = ["created_by"]
+
+
+#admin form
+class AdminForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        exclude = ["created_by"]
