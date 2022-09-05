@@ -10,7 +10,7 @@
     <div class="container ">
         <div class="row my-5">
             <div class="col-md-12">
-                <form action= "{% url 'create-category'%}" method="post" enctype="multipart/form-data" class="form">
+                <form action= "{% url 'admin-update' user_id=user.id %}" method="post" enctype="multipart/form-data" class="form">
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     {% buttons %}
