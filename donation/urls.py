@@ -57,8 +57,7 @@ urlpatterns = [
     path("item/create/", views.ItemCreateView.as_view(), name="item-create"),
     path("item/<int:object_id>/update/", views.ItemUpdateView.as_view(), name="item-update"),
     path("item/<int:object_id>/delete/", views.ItemDeleteView.as_view(), name="item-delete"),
-
-
+    path("item/<int:object_id>/reserve/", views.ReservedView.as_view(), name="item-reserve"),
 
     #Announcement CRUD
     path("announcement/", views.AnnoucementsListAPIView.as_view(), name="announcements"),
@@ -67,6 +66,12 @@ urlpatterns = [
     path("announcement/update/<int:object_id>/", views.AnnoucementUpdateView.as_view(), name="announcement-update"),
     path("announcement/delete/<int:object_id>/", views.AnnoucementDeleteView.as_view(), name="announcement-delete"),
     path("announcement/donate/<int:object_id>/", views.DonateView.as_view(), name="donate"),
+
+
+    #Report CRUD
+    path("report/", views.ReportListAPIView.as_view(), name="reports"),
+    path("report/<int:object_id>/", views.OneReportListAPIView.as_view(), name="report"),
+    path("report/create/", views.ReportCreateView.as_view(), name="report-create"),
 
     # web paths
     path("home/",views.get_charity,name="home"),
