@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainSerializer, TokenObtainPairSerializer
 
-from .models import UserProfile, Charity, Category, Annoucement, Item, User
-
+from .models import UserProfile, Charity, Category, Annoucement, Item, User, Report
 from rest_framework.authtoken.models import Token
 
 from django.utils.translation import gettext_lazy as _
@@ -77,9 +76,19 @@ class GetAllAnnoucementSerializers(serializers.ModelSerializer):
 class GetAllItemsSerializers(serializers.ModelSerializer):
     created_by = GetAllUsersSerializers()
     category_name = GetAllCategoriesSerializers()
+    charity_name = GetAllUsersSerializers()
     class Meta:
         model = Item
         fields = "__all__"
+
+
+class GetAllReportsSerializers(serializers.ModelSerializer):
+    created_by = GetAllUsersSerializers()
+    to = GetAllUsersSerializers()
+    class Meta:
+        model = Report
+        fields = "__all__"
+
 
 class UsersProfileListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -172,6 +181,29 @@ class ItemCreateSerializer(serializers.ModelSerializer):
 
         return validated_data
 
+class ReportCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Report
+        fields = ["title", "description", "to", "item"]
+        extra_kwargs = {
+            "owner": {
+                "read_only": True
+            }
+        }
+
+    def create(self, validated_data):
+        title = validated_data["title"]
+        description = validated_data["description"]
+        to = validated_data["to"]
+        item = validated_data["item"]
+        owner = self.context["request"].user
+
+        newReport = Report(title=title, description=description, created_by=owner, to=to, item=item)
+        newReport.save()
+
+        return validated_data
+
 class CategoryCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -192,15 +224,22 @@ class AnnoucementCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Annoucement
-        fields = ["name", "description", "image", "category"]
-
+        fields = ["name", "description", "image", "category_name", "priority", "duration", "quantity"]
+        extra_kwargs = {
+            "owner": {
+                "read_only": True
+            }
+        }
     def create(self, validated_data):
         name = validated_data["name"]
         description = validated_data["description"]
         image = validated_data["image"]
-        category = validated_data["category"]
-
-        newAnnoucement = Annoucement(name=name, description=description, image=image, category=category)
+        category = validated_data["category_name"]
+        priority = validated_data["priority"]
+        duration = validated_data["duration"]
+        quantity = validated_data["quantity"]
+        owner = self.context["request"].user
+        newAnnoucement = Annoucement(name=name, description=description, image=image, category_name=category, priority=priority, condition="New", charity_name=owner, duration=duration, quantity=quantity, remaining=quantity)
         newAnnoucement.save()
 
         return validated_data
@@ -255,6 +294,11 @@ class DonateSerializer(serializers.ModelSerializer):
         model = Annoucement
         fields = ["remaining"]
 
+class ItemUpdateReserved(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        fields = ["isReserved", "charity_name"]
 
 class updateUserPointsSerializer(serializers.ModelSerializer):
 

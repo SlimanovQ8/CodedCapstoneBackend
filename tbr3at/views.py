@@ -4,7 +4,7 @@ from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, 
 from django.contrib.auth.models import AbstractUser
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
-from .models import Charity, Category, Annoucement, UserProfile, Item, User
+from .models import Charity, Category, Annoucement, UserProfile, Item, User, Report
 from tbr3at import  serializers
 from .permissions import IsOwner
 from tbr3at import models
@@ -12,6 +12,8 @@ from .forms import RegisterForm,LoginForm,CategoryForm,itemForm
 from django.contrib.auth import login,authenticate,logout
 from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
+from django.db.models import Count, Avg, Sum
+
 
 # Create your views here.
 
@@ -97,6 +99,20 @@ class ItemCreateView(CreateAPIView):
     serializer_class = serializers.ItemCreateSerializer
 
 
+class ReportCreateView(CreateAPIView):
+    serializer_class = serializers.ReportCreateSerializer
+
+
+class ReportListAPIView(ListAPIView):
+    queryset = Report.objects.all()
+    serializer_class = serializers.GetAllReportsSerializers
+
+
+class OneReportListAPIView(ListAPIView):
+    queryset = Report.objects.all()
+    serializer_class = serializers.GetAllReportsSerializers
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
 
 class CategoryCreateView(CreateAPIView):
     queryset = Category.objects.all()
@@ -108,12 +124,8 @@ class CategoryCreateView(CreateAPIView):
 
 
 class AnnouncementCreateView(CreateAPIView):
-    queryset = Annoucement.objects.all()
     serializer_class = serializers.AnnoucementCreateSerializer
-    permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 
 
 class ItemUpdateView(UpdateAPIView):
@@ -141,6 +153,12 @@ class AnnoucementUpdateView(UpdateAPIView):
 class DonateView(UpdateAPIView):
     queryset = Annoucement.objects.all()
     serializer_class = serializers.DonateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'object_id'
+
+class ReservedView(UpdateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = serializers.ItemUpdateReserved
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
 
@@ -369,11 +387,13 @@ def get_charity(request):
     users = User.objects.filter(isUser=True).all()
     allUsers = User.objects.all()
     items = Item.objects.all()
+    totalDonation = list(User.objects.all().aggregate(Sum('numOfDonation')).values())[0]
     charites = User.objects.filter(isCharity=True).all()
     context = {
         "users":users,
         "charities": charites,
         "allUsers": allUsers,
-        "items": items
+        "items": items,
+        "totalDonation": totalDonation
                }
     return render(request,"dashboard.html",context)

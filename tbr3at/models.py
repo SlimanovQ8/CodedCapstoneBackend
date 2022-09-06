@@ -40,10 +40,18 @@ class Item(models.Model):
     image = models.ImageField(upload_to='images/')
     condition = models.CharField(choices=condition_choices, max_length=15, null=True, blank=True)
     isReserved = models.BooleanField(default=False)
+    isApproved = models.BooleanField(default=False)
     category_name = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
         related_name="items",
+        null=True,
+        blank=True,
+    )
+    charity_name = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="by",
         null=True,
         blank=True,
     )
@@ -112,3 +120,25 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Report(models.Model):
+    title = models.CharField(max_length=40, null=True, blank=True)
+    description = models.TextField()
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="reportCreator",
+
+    )
+    to = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="reportedTo",
+
+    )
+
+    item = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item",
+
+    )
