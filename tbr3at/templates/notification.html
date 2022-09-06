@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+{%  block content%}
+
+
+    <section id="interface">
+        <div class="navigation">
+            <div class="n1">
+                <div>
+                    <i id="menu-btn" class="fas fa-bars"></i>
+                </div>
+                <div class="search">
+                    <i class="far fa-search"></i>
+                    <input type="text" placeholder="Search">
+                </div>
+            </div>
+
+            <div class="profile">
+                <i class="far fa-bell"></i>
+                {% if request.user.is_authenticated %}
+                <img src="{{request.user.image.url}}" alt="">
+                {% endif %}
+
+            </div>
+        </div>
+
+        <h3 class="i-name">
+            Report
+        </h3>
+
+
+        <div class="board">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Title</td>
+                        <td>Description</td>
+                        <td>From</td>
+                        <td>To</td>
+                        <td>Item</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in report %}
+                    <tr>
+                        <td class="people">
+                            <img src="{{ report.item.image.url }}" alt="">
+                            <div class="people-de">
+                                <h5>{{ report.title }}</h5>
+
+                            </div>
+                        </td>
+
+                        <td class=>
+                           <div > <p>{{report.description}}</p></div>
+                        </td>
+
+                        <td class="role">
+                                <div class = "d-flex align-items-center">
+
+                                    {{ report.created_by.username }}
+
+                            </div>
+                                
+
+
+
+                            <!-- <a href="#">Edit</a> -->
+                        </td>
+                         <td class="role">
+                                <div class = "d-flex align-items-center">
+
+                                    {{ report.to.username }}
+
+                            </div>
+
+
+
+
+                            <!-- <a href="#">Edit</a> -->
+                        </td>
+                        <td><!-- Button trigger modal -->
+                            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  View Item
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-auto">
+                            <img src="{{ report.item.image.url }}" class="pt-3 rounded mx-auto d-block" style="height: 250px; width: 250px;" >
+           <p class="username">Item name: {{report.item.name}}</p>
+                                <p class="rating"> Description: {{report.item.description}}</p>
+                                <p class="phone"> Condition: {{report.item.condition}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div></td>
+
+                    </tr>
+                {% endfor %}
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+{% endblock content %}
