@@ -27,8 +27,7 @@ class LoginForm(forms.Form):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = models.Category
-        exclude = ["created_by"]
-
+        fields = '__all__'
 
 
 class itemForm(forms.ModelForm):
@@ -42,3 +41,9 @@ class AdminForm(forms.ModelForm):
     class Meta:
         model = models.User
         exclude = ["created_by"]
+
+
+class AdminForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields =['image','name','username','password']

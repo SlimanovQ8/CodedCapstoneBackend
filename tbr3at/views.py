@@ -8,7 +8,7 @@ from .models import Charity, Category, Annoucement, UserProfile, Item, User, Rep
 from tbr3at import  serializers
 from .permissions import IsOwner
 from tbr3at import models
-from .forms import RegisterForm,LoginForm,CategoryForm,itemForm
+from .forms import RegisterForm,LoginForm,CategoryForm,itemForm,AdminForm
 from django.contrib.auth import login,authenticate,logout
 from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
@@ -373,7 +373,7 @@ def get_user_details(request,user_id):
             "username": user.username,
             "rating": user.rating,
             "phone": user.phone,
-            "locatiojn": user.location,
+            "location": user.location,
             "image": user.image,
     
         }
@@ -388,6 +388,7 @@ def get_charity(request):
     allUsers = User.objects.all()
     items = Item.objects.all()
     totalDonation = list(User.objects.all().aggregate(Sum('numOfDonation')).values())[0]
+
     charites = User.objects.filter(isCharity=True).all()
     context = {
         "users":users,
@@ -395,5 +396,34 @@ def get_charity(request):
         "allUsers": allUsers,
         "items": items,
         "totalDonation": totalDonation
+
                }
     return render(request,"dashboard.html",context)
+
+
+
+#Admin Update
+def edit_admin_profile(request: HttpRequest, user_id) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect("login")
+    obj = models.User.objects.get(id= user_id)
+    form = AdminForm()
+    if request.method == "POST":
+
+        form = AdminForm(request.POST, request.FILES, instance=obj)
+
+        if form.is_valid():
+            rec = form.save(commit=False)
+            rec.created_by = request.user
+            rec.save()
+            return redirect("dashboard.html")
+
+    context = {
+        "obj": obj,
+        "form": form,
+
+    }
+    return render(request,"admin-setting.html",context)
+
+
+

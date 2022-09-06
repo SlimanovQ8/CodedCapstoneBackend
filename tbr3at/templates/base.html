@@ -27,14 +27,17 @@
         <div class="logo">
             {% if request.user.is_authenticated %}
             <img src="{{request.user.image.url}}" alt="" class="mr-3  img-thumbnail shadow-sm">
-            <h2>{{request.user.username}}</h2>
-            <p class="font-weight-normal text-muted mb-0">Adminstartor</p>
+            <div >
+                <h2>{{request.user.username}}</h2>
+                <p class="font-weight-normal text-muted mb-0">Adminstartor</p>
+            </div>
+           
         </div>
         {%endif%}
 
         <div class="items">
-            <li><i class="fa-solid fa-house px-1"></i><a href="#">Dashboard</a></li>
-            <li><i class="fa-solid fa-list-ul px-1"></i><a href="#">User List</a></li>
+            <li><i class="fa-solid fa-house px-1"></i><a href="{% url 'home' %}">Dashboard</a></li>
+            <li><i class="fa-solid fa-plus"></i><a href="{% url 'create-category' %}">Add Category</a></li>
             <li><i class="fa-solid fa-gear px-1"></i><a href="#">Admin setting</a></li>
             <li><i class="fa-solid fa-bell px-1"></i></i><a href="#">Notification</a></li>
             {% if user.is_authenticated %}

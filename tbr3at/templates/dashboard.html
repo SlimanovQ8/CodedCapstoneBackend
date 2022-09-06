@@ -37,21 +37,22 @@
                 </div>
             </div>
             <div class="val-box">
-                <i class="fas fa-shopping-cart"></i>
+                <i class="fa-solid fa-hand-holding-heart"></i>
                 <div>
                     <h3>{{ charities.count }}</h3>
                     <span>Total Charities</span>
                 </div>
             </div>
             <div class="val-box">
-                <i class="fas fa-acorn"></i>
+                <i class="fa-solid fa-hand-holding-dollar"></i>
                 <div>
-                    <h3>{{ totalDonation }}</h3>
-                    <span>Products Sell</span>
+
+                    <h3>{{totalDonation}}</h3>
+                    <span># of donation</span>
                 </div>
             </div>
             <div class="val-box">
-                <i class="fas fa-dollar-sign"></i>
+                <i class="fa-solid fa-cart-shopping"></i>
                 <div>
                     <h3>{{ items.count }}</h3>
                     <span>Total Items</span>
@@ -64,7 +65,7 @@
                 <thead>
                     <tr>
                         <td>Name</td>
-                        <td>Status</td>
+                        <td>Points</td>
                         <td>Role</td>
                         <td></td>
                     </tr>
@@ -82,13 +83,37 @@
                         </td>
 
                         <td class="active">
-                            <p>Active</p>
+                            <p>{{user.points}}</p>
                         </td>
+
                         <td class="role">
-                            <p>{% if user.isCharity %} Charity {% elif user.is_superuser %} Superuser{% else %} User {% endif %}</p>
+                            <p>{% if user.isCharity %} 
+                                <div class = "d-flex align-items-center">
+                                    <div class="green-circle me-3">
+
+                                    </div>
+                                Charity 
+
+                            </div>{% elif user.is_superuser %}
+                             <div class="d-flex align-items-center">
+                                <div class="yellow-circle me-3"></div>
+                                Superuser
+                                
+
+                            </div>{% else %} 
+                            <div  class = "d-flex align-items-center">
+                                <div class="blue-circle me-3">
+
+                                </div>
+                                User
+
+
+                            </div> {% endif %}</p>
+
                             <!-- <a href="#">Edit</a> -->
                         </td>
-                        <td><a class="edit" href="#">Edit</a></td>
+                        <td><a class="edit" href="{%url 'user_details' user_id=user.id%}">View Profile</a></td>
+
                     </tr>
                 {% endfor %}
 
