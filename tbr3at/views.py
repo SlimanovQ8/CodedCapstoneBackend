@@ -362,7 +362,10 @@ def get_User(request):
     context = {"users":users}
     return render(request,"home_page.html",context)
 
-
+def getReports(request):
+    reports = Report.objects.all()
+    context = {"report":reports}
+    return render(request,"notification.html",context)
 #User details
 def get_user_details(request,user_id):
     user=User.objects.get(id=user_id)

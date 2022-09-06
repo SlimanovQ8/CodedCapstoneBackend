@@ -83,6 +83,7 @@ urlpatterns = [
     path("category/<int:CategoryID>/", views.category_detail, name="category-detail"),
     path("item/<int:ItemID>/", views.item_detail, name="item-detail"),
     path("users/",views.get_User,name="users_list"),
+    path("reports/",views.getReports,name="reportsss"),
     path("user-details/<int:user_id>/",views.get_user_details,name="user_details"),
     path("admin-update/<int:user_id>/",views.edit_admin_profile,name="admin-update"),
 
