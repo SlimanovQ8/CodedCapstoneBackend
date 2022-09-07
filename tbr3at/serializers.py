@@ -4,6 +4,11 @@ from rest_framework_simplejwt.serializers import TokenObtainSerializer, TokenObt
 from .models import UserProfile, Charity, Category, Annoucement, Item, User, Report
 from rest_framework.authtoken.models import Token
 
+# remove unused imports
+# serializers are very resusable, they can be used in all aspected of crud
+# one serailizer can be used by many different api views while having multiple useds like create, update, validate
+# maintaining consistency of the response is very important helps streamline to development process
+
 from django.utils.translation import gettext_lazy as _
 """
     Register Normal User

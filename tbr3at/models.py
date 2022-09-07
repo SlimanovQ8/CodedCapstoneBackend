@@ -8,21 +8,36 @@ from datetime import timedelta
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+# Remove unused imports above
+# Try to utilize signals when creating UserProfile
+# One issue that I'm seeing is that the related names might need to be changed to help with reverse queries
+# There are very reptitive fields that are present in the models, like phone number, desciption etc.
+
+
 # Create your models here.
 class User(AbstractUser):
   #Boolean fields to select the type of account.
-  username = models.CharField(max_length=40, blank=True, null=True, unique=True)
+  username = models.CharField(max_length=40, blank=True, null=True, unique=True) 
+  # This should really be required, at the moment, with blank and null being True, this field (username) is completely optional
+  # You currently have extra fields that are required that should really be in another model, like charity name, description
   charityname = models.CharField(max_length=40, blank=True, null=True)
   name = models.CharField(max_length=40, blank=True, null=True)
   description = models.TextField(blank=True, null=True)
   image = models.ImageField(upload_to='images/', blank=True, null=True)
   rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], blank=True, null=True, default=0.0)
+  # I would suggest putting the rating in the profile or create a seperate model for it, since you are trying to implement a 
+  # reputation system as an icebox feature
   phone = models.CharField(max_length=8, blank=True, null=True)
   location = models.CharField(max_length=250, blank=True, null=True)
   isUser = models.BooleanField(default=False)
-  isCharity = models.BooleanField(default=False)
+  isCharity = models.BooleanField(default=False) # This field is enough to distringuish between regular users or charity organiation users
+  # the isUser field is not required
+  # also in python, we seperate variables with underscores and dont user Camel casing, is_charity
   numOfDonation = models.PositiveIntegerField(default=0)
   points = models.PositiveIntegerField(default=0)
+  # points and number of donations can be in the UserProfile or another model, its not something that
+  # both charity and regular users have in common from my understanding
+  # you might want to add a __str__ method for this class
 
 class Category(models.Model):
     name = models.CharField(max_length=40)
@@ -57,9 +72,11 @@ class Item(models.Model):
         null=True,
         blank=True,
     )
+    # The field above might need to be changed to help with making reverse query from Charity instances more intuitive
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="items"
     )
+    
 
     def __str__(self):
         return self.name
@@ -68,6 +85,7 @@ class Item(models.Model):
 class Charity(models.Model):
     charity = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+        # add a related name the charity field
     name = models.CharField(max_length=40)
     description = models.TextField(null= True, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)

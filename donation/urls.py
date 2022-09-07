@@ -24,6 +24,17 @@ from tbr3at import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+# I like how these have been grouped but the naming convention could be improved without needing the app comments to
+# explain the route
+# for api paths:
+# "api/users/" for all users
+# "api/profile/<int:profile_id>/" for profile detail
+# "api/charity/<int:charity_id>/" for charity detail
+# "api/register/"
+# for web:
+# "users/"
+# "user/<int:user_id>/" for geting user details
+# Additionally, your app could be split up into multiple apps to help maintain and organize your project
 
 urlpatterns = [
 

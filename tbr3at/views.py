@@ -14,7 +14,12 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
 from django.db.models import Count, Avg, Sum
 
+# remove unused imports
+# to help organize your code, group all related views together according to their model that
+# your attemping to perform CRUD on
 
+# in some views for CRUD, the permissions are missing, since there is only one permission class,
+# you might want to added additional custom permissions
 # Create your views here.
 
 
@@ -143,7 +148,7 @@ class CategoryUpdateView(UpdateAPIView):
     lookup_url_kwarg = 'object_id'
     permission_classes = [IsAuthenticated, IsOwner]
 
-
+# missing permissions
 class AnnoucementUpdateView(UpdateAPIView):
     queryset = Annoucement.objects.all()
     serializer_class = serializers.AnnoucementUpdateSerializer
@@ -187,7 +192,7 @@ class CategoryDeleteView(DestroyAPIView):
     serializer_class = serializers.CategoryDeleteSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated, IsOwner] # I think in this case its just the owner permission that is required
 
 
 """delete annoucement view"""
@@ -198,7 +203,7 @@ class AnnoucementDeleteView(DestroyAPIView):
     serializer_class = serializers.AnnoucementDeleteSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'object_id'
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated, IsOwner] # I think in this case its just the owner permission that is required
 
 
 ##############################################################################################
@@ -207,14 +212,16 @@ class AnnoucementDeleteView(DestroyAPIView):
 
 # View for home page 
 def home_Page(request):
-    categories: list[models.Category] = list(models.Category.objects.all())
+    categories: list[models.Category] = list(models.Category.objects.all()) # no need to wrap this into a list, the all() method creates a list
 
     context = {
         "categories": categories,
     }
     return render(request,"home_page.html",context)
 
-
+# this view allows anyone to register as a site administrator, for the purposes of this project
+# and the role this user has, you shouldn't have this view
+# you might want to repurpose this view to allow only site admin users to create other site admin users
 def register_user(request):
     form =  RegisterForm()
     if request.method == "POST":
@@ -225,7 +232,7 @@ def register_user(request):
             print(user.first_name)
             user.save()
             print(user)
-
+            # remove print statements
             login(request,user)
             return redirect("home")
     context = {
@@ -243,7 +250,7 @@ def login_user(request):
         if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
-            print(username)
+            print(username) # remove this
             auth_user = authenticate(username=username, password=password)
             login(request, auth_user)
             return redirect("home")
@@ -267,7 +274,8 @@ def logout_user(request):
 #create ctegory
 def create_category(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
-        return redirect("login")
+        return redirect("login") # you can try reducing the amount of code needed to be repeated by utilizing the login_required decorator
+        # https://docs.djangoproject.com/en/4.1/topics/auth/default/#the-login-required-decorator
 
     form = CategoryForm()
     if request.method == "POST":
@@ -325,6 +333,10 @@ def category_detail(request, CategoryID):
             "description": category.description,
             "image": category.image,
         }
+        # you can simply pass the whole obj
+        # and the name "categories" should be "category"
+        # context = {"category": category}
+
 
     }
 
@@ -335,7 +347,8 @@ def category_detail(request, CategoryID):
 
 def item_detail(request, ItemID):
     Rec = models.Item.objects.get(id=ItemID)
-
+    # lower case the Rec, bad naming practice
+    # same comment as category detail view
     context = {
         "item": {
             "name": Rec.name,
@@ -357,7 +370,7 @@ def item_detail(request, ItemID):
 
 
 # User Lists 
-def get_User(request):
+def get_User(request):# bad view naming
     users = User.objects.all()
     context = {"users":users}
     return render(request,"home_page.html",context)
@@ -391,6 +404,7 @@ def get_charity(request):
     allUsers = User.objects.all()
     items = Item.objects.all()
     totalDonation = list(User.objects.all().aggregate(Sum('numOfDonation')).values())[0]
+    # could simply count the number of items (with filters if needed) without the need to aggregate
 
     charites = User.objects.filter(isCharity=True).all()
     context = {

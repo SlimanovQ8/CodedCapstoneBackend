@@ -15,6 +15,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# You have packages installed like django-allauth that aren't being used, either update your requirements by removing them from the
+# requirements.txt file and uninstalling it from the environment
+# or us these packages in the project
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
